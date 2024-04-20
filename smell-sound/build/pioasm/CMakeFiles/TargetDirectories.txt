@@ -1,0 +1,3 @@
+/home/ranu/gitrepo/pico-projects/smell-sound/build/pioasm/CMakeFiles/pioasm.dir
+/home/ranu/gitrepo/pico-projects/smell-sound/build/pioasm/CMakeFiles/edit_cache.dir
+/home/ranu/gitrepo/pico-projects/smell-sound/build/pioasm/CMakeFiles/rebuild_cache.dir

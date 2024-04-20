@@ -47,7 +47,9 @@ target_include_directories(smell-sound PRIVATE
 target_link_libraries(smell-sound 
         hardware_spi
         hardware_i2c
+        ssd1306
         )
 
 pico_add_extra_outputs(smell-sound)
 
+add_subdirectory(lib)

@@ -3,8 +3,11 @@
 #include "hardware/spi.h"
 #include "hardware/i2c.h"
 #include "ssd1306.h"
-#include "font.h"
 #include "image.h"
+#include "acme_5_outlines_font.h"
+#include "bubblesstandard_font.h"
+#include "crackers_font.h"
+#include "BMSPA_font.h"
 
 //SPI for 8xBME688 chips.
 #define SPI_PORT    spi0
@@ -43,9 +46,78 @@
 #define EXP_BME_6   0x40
 #define EXP_BME_7   0x80
 
+#define SLEEPTIME 25
+const uint8_t num_chars_per_disp[]={7,7,7,5};
+const uint8_t *fonts[4]= {acme_font, bubblesstandard_font, crackers_font, BMSPA_font};
+
+
+void animation(ssd1306_t* disp) {
+    const char *words[]= {"SSD1306", "DISPLAY", "DRIVER"};
+
+    ssd1306_clear(disp);
+
+    printf("ANIMATION!\n");
+
+    char buf[8];
+
+    for(;;) {
+        for(int y=0; y<31; ++y) {
+            ssd1306_draw_line(disp, 0, y, 127, y);
+            ssd1306_show(disp);
+            sleep_ms(SLEEPTIME);
+            ssd1306_clear(disp);
+        }
+
+        for(int y=0, i=1; y>=0; y+=i) {
+            ssd1306_draw_line(disp, 0, 31-y, 127, 31+y);
+            ssd1306_draw_line(disp, 0, 31+y, 127, 31-y);
+            ssd1306_show(disp);
+            sleep_ms(SLEEPTIME);
+            ssd1306_clear(disp);
+            if(y==32) i=-1;
+        }
+
+        for(int i=0; i<sizeof(words)/sizeof(char *); ++i) {
+            ssd1306_draw_string(disp, 8, 24, 2, words[i]);
+            ssd1306_show(disp);
+            sleep_ms(800);
+            ssd1306_clear(disp);
+        }
+
+        for(int y=31; y<63; ++y) {
+            ssd1306_draw_line(disp, 0, y, 127, y);
+            ssd1306_show(disp);
+            sleep_ms(SLEEPTIME);
+            ssd1306_clear(disp);
+        }
+
+        for(size_t font_i=0; font_i<sizeof(fonts)/sizeof(fonts[0]); ++font_i) {
+            uint8_t c=32;
+            while(c<=126) {
+                uint8_t i=0;
+                for(; i<num_chars_per_disp[font_i]; ++i) {
+                    if(c>126)
+                        break;
+                    buf[i]=c++;
+                }
+                buf[i]=0;
+
+                ssd1306_draw_string_with_font(disp, 8, 24, 2, fonts[font_i], buf);
+                ssd1306_show(disp);
+                sleep_ms(800);
+                ssd1306_clear(disp);
+            }
+        }
+
+        ssd1306_bmp_show_image(disp, image_data, image_size);
+        ssd1306_show(disp);
+        sleep_ms(2000);
+    }
+}
 
 int main()
 {
+    sleep_ms(2000);
     stdio_init_all();
 
     // SPI initialisation
@@ -67,24 +139,26 @@ int main()
     i2c_init(I2C_0_PORT, 400*1000);
     gpio_set_function(I2C_0_SDA, GPIO_FUNC_I2C);
     gpio_set_function(I2C_0_SCL, GPIO_FUNC_I2C);
-    gpio_pull_up(I2C_0_SDA);
-    gpio_pull_up(I2C_0_SCL);
+    //gpio_pull_up(I2C_0_SDA);
+    //gpio_pull_up(I2C_0_SCL);
 
     // I2C 1 Initialisation
     i2c_init(I2C_1_PORT, 400*1000);
     gpio_set_function(I2C_1_SDA, GPIO_FUNC_I2C);
     gpio_set_function(I2C_1_SCL, GPIO_FUNC_I2C);
-    gpio_pull_up(I2C_1_SDA);
-    gpio_pull_up(I2C_1_SCL);
+    //gpio_pull_up(I2C_1_SDA);
+    //gpio_pull_up(I2C_1_SCL);
 
     // Initialize display and write test to it.
     ssd1306_t disp;
-    disp.external_vcc=false;
-    ssd1306_init(&disp, 128, 64, 0x78, i2c0);
-    ssd1306_clear(&disp);
-    ssd1306_bmp_show_image(&disp, image_data, image_size);
-    ssd1306_show(&disp);
+    disp.external_vcc=true;
+    ssd1306_init(&disp, 128, 64, 0x7A, I2C_0_PORT);
+    //ssd1306_clear(&disp);
+    //ssd1306_bmp_show_image(&disp, image_data, image_size);
+    //ssd1306_show(&disp);
     sleep_ms(2000);
+    animation(&disp);
+
 
 
     return 0;

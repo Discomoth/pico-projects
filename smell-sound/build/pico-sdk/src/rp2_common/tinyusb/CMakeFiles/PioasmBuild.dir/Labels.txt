@@ -1,0 +1,13 @@
+# Target labels
+ PioasmBuild
+# Source files and their labels
+/home/ranu/gitrepo/pico-projects/smell-sound/build/pico-sdk/src/rp2_common/tinyusb/CMakeFiles/PioasmBuild
+/home/ranu/gitrepo/pico-projects/smell-sound/build/pico-sdk/src/rp2_common/tinyusb/CMakeFiles/PioasmBuild.rule
+/home/ranu/gitrepo/pico-projects/smell-sound/build/pico-sdk/src/rp2_common/tinyusb/CMakeFiles/PioasmBuild-complete.rule
+/home/ranu/gitrepo/pico-projects/smell-sound/build/pico-sdk/src/rp2_common/tinyusb/pioasm/src/PioasmBuild-stamp/PioasmBuild-build.rule
+/home/ranu/gitrepo/pico-projects/smell-sound/build/pico-sdk/src/rp2_common/tinyusb/pioasm/src/PioasmBuild-stamp/PioasmBuild-configure.rule
+/home/ranu/gitrepo/pico-projects/smell-sound/build/pico-sdk/src/rp2_common/tinyusb/pioasm/src/PioasmBuild-stamp/PioasmBuild-download.rule
+/home/ranu/gitrepo/pico-projects/smell-sound/build/pico-sdk/src/rp2_common/tinyusb/pioasm/src/PioasmBuild-stamp/PioasmBuild-install.rule
+/home/ranu/gitrepo/pico-projects/smell-sound/build/pico-sdk/src/rp2_common/tinyusb/pioasm/src/PioasmBuild-stamp/PioasmBuild-mkdir.rule
+/home/ranu/gitrepo/pico-projects/smell-sound/build/pico-sdk/src/rp2_common/tinyusb/pioasm/src/PioasmBuild-stamp/PioasmBuild-patch.rule
+/home/ranu/gitrepo/pico-projects/smell-sound/build/pico-sdk/src/rp2_common/tinyusb/pioasm/src/PioasmBuild-stamp/PioasmBuild-update.rule
